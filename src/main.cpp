@@ -83,30 +83,6 @@ void setup()
   delay(1000);
 }
 
-void loop()
-{
-  buttonState = digitalRead(buttonPin);
-  C1PulseWidth = pulseIn(C1Pin, HIGH, 25000);
-  if (C1PulseWidth < 1000 || C1PulseWidth > 2000)
-  {
-    C1PulseWidth = lastC1PulseWidth;
-  }
-  if (buttonState == LOW)
-  {
-    if (C1PulseWidth > 1700)
-    {
-      stepCycle(count);
-      count++;
-    }
-    else if (C1PulseWidth < 1350)
-    {
-      stepCycle(count);
-      count--;
-    }
-  }
-  lastC1PulseWidth = C1PulseWidth;
-}
-
 void stepCycle(int state)
 {
   int offset;
@@ -152,4 +128,29 @@ void stepCycle(int state)
     FL_Ankle.write(FL_AnklePos[1] - offset);
     delay(stepDelay);
   }
+}
+
+
+void loop()
+{
+  buttonState = digitalRead(buttonPin);
+  C1PulseWidth = pulseIn(C1Pin, HIGH, 25000);
+  if (C1PulseWidth < 1000 || C1PulseWidth > 2000)
+  {
+    C1PulseWidth = lastC1PulseWidth;
+  }
+  if (buttonState == LOW)
+  {
+    if (C1PulseWidth > 1700)
+    {
+      stepCycle(count);
+      count++;
+    }
+    else if (C1PulseWidth < 1350)
+    {
+      stepCycle(count);
+      count--;
+    }
+  }
+  lastC1PulseWidth = C1PulseWidth;
 }
